@@ -10,14 +10,14 @@ namespace CQRSApp.Cqrs
     {
         private readonly PostgreDbContext _context;
 
-        public ProductQueryHandler()
+        public ProductQueryHandler(PostgreDbContext context)
         {
-            _context = new PostgreDbContext();
+            _context = context;
         }
 
         public async Task<List<Models.Product>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            _context.Database.Migrate();
+            //_context.Database.Migrate();
 
             var products = await _context.Products.ToListAsync();
             return products;

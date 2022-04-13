@@ -1,5 +1,6 @@
 
 
+using CQRSApp.Context;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ static void ConfigureServices(IServiceCollection services)
     services.AddSwaggerGen();
     services.AddControllers();
     services.AddMediatR(typeof(Program));
+    services.AddSingleton<PostgreDbContext>();
     //var mapperConfig = new MapperConfiguration(mc =>
     //{
     //    mc.AddProfile(new QuizProfile());

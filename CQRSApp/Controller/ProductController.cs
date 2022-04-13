@@ -1,4 +1,5 @@
-﻿using CQRSApp.Cqrs.Handlers.QueryHandlers.Product;
+﻿using CQRSApp.Cqrs.Handlers.CommandHadlers.Product;
+using CQRSApp.Cqrs.Handlers.QueryHandlers.Product;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,12 +16,19 @@ namespace CQRSApp.Controller
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("GetProducts")]
         public async Task<IActionResult> GetProducts()
         {
             var query = new GetProductsQuery();
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+
+        [HttpPost("SaveProduct")]
+        public async Task<ActionResult> SaveProducts(CreateProductCommandRequest request)
+        {
+            var result = await _mediator.Send(request);
+            return StatusCode(201, result);
         }
     }
 }
